@@ -18,7 +18,7 @@ class _BotsScreenState extends State<BotsScreen> {
 
   String selectedApiKey = '';
   String selectedSymbol = '';
-  List<String> apiKeyService = ['', ''];
+  List<String> apiKeys = ['Key1', 'Key2'];
   List<String> symbols = ['BTCUSDT', 'ETHUSDT'];
 
   void createBot() {
@@ -49,7 +49,7 @@ class _BotsScreenState extends State<BotsScreen> {
         amountController: amountController,
         selectedApiKey: selectedApiKey,
         selectedSymbol: selectedSymbol,
-        apiKeys: apiKeyService,
+        apiKeys: apiKeys,
         symbols: symbols,
         onApiKeyChanged: (val) => setState(() => selectedApiKey = val ?? ''),
         onSymbolChanged: (val) => setState(() => selectedSymbol = val ?? ''),
