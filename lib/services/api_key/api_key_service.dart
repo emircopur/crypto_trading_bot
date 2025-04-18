@@ -21,21 +21,33 @@ class ApiKeyService {
   Future<Map<String, dynamic>> addApiKey(
       String exchange, String marketType, String key, String secretKey) async {
     final headers = await _network.getHeaders();
+
+    // İstek gövdesini oluştur
+    final requestBody = {
+      'exchange': exchange.toLowerCase(),
+      'market_type': marketType.toLowerCase(),
+      'key': key,
+      'secret_key': secretKey,
+    };
+
+    print('Request URL: ${_network.url('/add-key')}');
+    print('Request Headers: $headers');
+    print('Request Body: ${jsonEncode(requestBody)}');
+
     final response = await http.post(
       _network.url('/add-key'),
       headers: headers,
-      body: jsonEncode({
-        'exchange': exchange,
-        'market_type': marketType,
-        'key': key,
-        'secret_key': secretKey,
-      }),
+      body: jsonEncode(requestBody),
     );
+
+    print('Response Status: ${response.statusCode}');
+    print('Response Body: ${response.body}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to add API key: ${response.body}');
+      throw Exception(
+          'Failed to add API key: ${response.statusCode} - ${response.body}');
     }
   }
 
